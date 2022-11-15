@@ -11,7 +11,7 @@ import (
 )
 
 func DBInstance() *mongo.Client {
-	MongoDb := "mongodb://localhost:90900/caloriesdb"
+	MongoDb := "mongodb://localhost:27107/caloriesdb"
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(MongoDb))
 	if err != nil {
@@ -28,4 +28,11 @@ func DBInstance() *mongo.Client {
 
 	fmt.Println("Connected to MongoDB")
 	return client
+}
+
+var Client *mongo.Client = DBInstance()
+
+func OpenCollection(client *mongo.Client, collectionName string) *mongo.Collection {
+	var collection *mongo.Collection = client.Database("caloriesdb").Collection(collectionName)
+	return collection
 }
